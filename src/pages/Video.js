@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Recommendation from "./Recommendation";
-import SpinnerDot from "./SpinnerDot";
+import Recommendation from "../components/Recommendation";
+import SpinnerDot from "../components/SpinnerDot";
 import { useParams } from "react-router";
 import axios from "axios";
 
