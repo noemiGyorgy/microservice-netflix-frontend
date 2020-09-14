@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 function Main() {
   const [videos, videosAreLoading] = useApiCall(
-    "http://localhost:8081/video/list"
+    "http://localhost:8762/video/videos/list"
   );
 
   let videoList = <div></div>;
@@ -15,7 +15,10 @@ function Main() {
         <ul className="list-group text-dark text-left">
           {videos.map((video) => (
             <Link to={`/video/${video.id}`} key={video.id}>
-              <li className="list-group-item" key={video.id}>
+              <li
+                className="list-group-item list-group-item-dark"
+                key={video.id}
+              >
                 {video.id} {video.name}
               </li>
             </Link>

@@ -7,16 +7,10 @@ const useApiCall = (url) => {
 
   useEffect(() => {
     setLoading(true);
-    axios
-      .get(url, {
-        headers: {
-          mode: "no-cors",
-        },
-      })
-      .then((response) => {
-        setFetchedData(response.data);
-        setLoading(false);
-      });
+    axios.get(url).then((response) => {
+      setFetchedData(response.data);
+      setLoading(false);
+    });
   }, [url]);
 
   return [fetchedData, isLoading];
