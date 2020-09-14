@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import OneReview from "./OneReview";
+import axios from "axios";
 
-function Recommendation(reviews) {
+function Recommendation(props) {
+  const max = 5;
+  const [rating, setRating] = useState(max);
+  const [comment, setComment] = useState("");
+
   function getRatingNumbers(max) {
     const ratings: JSX.Element[] = [];
-
     for (let i = max; i >= 1; i--) {
       ratings.push(
         <option key={i} value={i}>
@@ -12,23 +16,53 @@ function Recommendation(reviews) {
         </option>
       );
     }
-
     return <React.Fragment>{ratings}</React.Fragment>;
   }
 
+  const handleSubmit = () => {
+    if (comment !== "") {
+      axios
+        .post(`http://localhost:8762/video/videos/addReview`, {
+          rating: rating,
+          comment: comment,
+          videoId: props.videoId,
+        })
+        .then((response) => {
+          document.getElementById("rating").value = max;
+          document.getElementById("comment").value = "";
+          props.setReviews([...props.reviews, response.data]);
+          window.location.reload();
+        });
+    }
+  };
+
   const recommendation = (
     <div className="d-flex justify-content-center m-5">
-      <form
-        className="form-inline"
-        action="http://localhost:8762/video/videos/addReview"
-      >
-        <select className="custom-select">{getRatingNumbers(5)}</select>
+      <form className="form-inline">
+        <select
+          className="custom-select"
+          id="rating"
+          onChange={(event) => {
+            setRating(event.target.value);
+          }}
+        >
+          {getRatingNumbers(max)}
+        </select>
         <input
+          id="comment"
           type="text"
           className="form-control"
-          aria-label="Review with rating"
+          aria-label="review"
+          required
+          onChange={(event) => {
+            setComment(event.target.value);
+          }}
         />
-        <button type="button" className="btn btn-outline-light ml-2">
+        <button
+          type="button"
+          onClick={handleSubmit}
+          className="btn btn-outline-light ml-2"
+        >
           Add
         </button>
       </form>
@@ -43,7 +77,7 @@ function Recommendation(reviews) {
   return (
     <div className="pt-3 pb-5">
       {recommendation}
-      {allReviews(reviews)}
+      {allReviews(props.reviews)}
     </div>
   );
 }
