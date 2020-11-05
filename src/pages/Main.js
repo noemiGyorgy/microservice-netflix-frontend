@@ -14,7 +14,11 @@ function Main() {
       <div>
         <ul className="list-group text-dark text-left">
           {videos.map((video) => (
-            <Link to={`/video/${video.id}`} key={video.id}>
+            <Link
+              to={`/video/${video.id}`}
+              key={video.id}
+              style={{ textDecoration: "none" }}
+            >
               <li
                 className="list-group-item list-group-item-dark"
                 key={video.id}

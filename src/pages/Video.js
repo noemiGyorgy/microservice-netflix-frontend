@@ -22,7 +22,9 @@ function Video() {
     setIsLoading(true);
 
     axios
-      .get(`http://localhost:8762/video/videos/details/${videoId}`)
+      .get(
+        `${process.env["REACT_APP_SERVER"]}${process.env["REACT_APP_VIDEO_DETAILS"]}/${videoId}`
+      )
       .then((response) => {
         console.log(response.data);
         setVideo(response.data.video);

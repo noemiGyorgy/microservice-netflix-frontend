@@ -22,11 +22,14 @@ function Recommendation(props) {
   const handleSubmit = () => {
     if (comment !== "") {
       axios
-        .post(`http://localhost:8762/video/videos/addReview`, {
-          rating: rating,
-          comment: comment,
-          videoId: props.videoId,
-        })
+        .post(
+          `${process.env["REACT_APP_SERVER"]}${process.env["REACT_APP_ADD_REVIEW"]}`,
+          {
+            rating: rating,
+            comment: comment,
+            videoId: props.videoId,
+          }
+        )
         .then((response) => {
           document.getElementById("rating").value = max;
           document.getElementById("comment").value = "";
